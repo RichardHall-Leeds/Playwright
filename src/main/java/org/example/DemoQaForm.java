@@ -49,16 +49,6 @@ public class DemoQaForm {
             Locator currentAddress = page.getByPlaceholder("Current Address");
             Locator submit_button = page.locator("#submit");
 
-            // indexes for result table
-            final int NAME = 1;
-            final int EMAIL_FORM = 2;
-            final int GENDER_FORM = 3;
-            final int MOBILE = 4;
-            final int DOB = 5;
-            final int SUBJECTS_FORM = 6;
-            final int HOBBIES = 7;
-            final int ADDRESS = 9;
-
             // actions to perform on the page
             firstName.fill(FIRSTNAME);
             lastName.fill(LASTNAME);
@@ -87,20 +77,26 @@ public class DemoQaForm {
             // state and city code to go here
 
 
-            // ✅ click away from form (KEY FIX)
+            // to resolve modal appearing before form is completed
             page.locator("body").click();
-
-            // ✅ ensure submit is visible and stable
+            // ensure submit is visible and stable
             submit_button.scrollIntoViewIfNeeded();
-
-            // ✅ optional stabilisation
+            // optional stabilisation
             page.waitForTimeout(500);
-
-            // ✅ force click avoids overlay issues
+            // force click avoids overlay issues
             submit_button.click(new Locator.ClickOptions().setForce(true));
 
             System.out.println("Form submitted successfully!");
 
+            // indexes for result table
+            final int NAME = 1;
+            final int EMAIL_FORM = 2;
+            final int GENDER_FORM = 3;
+            final int MOBILE = 4;
+            final int DOB = 5;
+            final int SUBJECTS_FORM = 6;
+            final int HOBBIES = 7;
+            final int ADDRESS = 9;
             // code to assert result table
             List<Locator> rows = page.locator("tr").all();
             String NameSubmission = rows.get(NAME).textContent();
