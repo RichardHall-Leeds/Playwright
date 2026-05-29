@@ -31,15 +31,11 @@ public class RnWebForm {
         final String DROPDOWN_SELECT = "Three";
         final String DROPDOWN_DATALIST = "San Francisco";
         final String COLOR_PICKER = "#ff0000";
-        final String DATE_PICKER = "05/01/2026";
+        final String DATE_PICKER_TEXT_ENTRY = "05/01/1999";
+        final String DATE_PICKER_PICKER_ENTRY = "15";
+        final String RANGE_SLIDER = "10";
 
         // file input
-
-
-
-
-        // file input
-        // x 4 checkbox and radio
 
         // locators
         Locator textInput = page.locator("#my-text-id");
@@ -55,6 +51,7 @@ public class RnWebForm {
         Locator defaultRadio = page.getByLabel("Default radio");
         Locator colorPicker = page.getByLabel("Color picker");
         Locator datePicker = page.getByLabel("Date picker");  // ask co-pilot if getbylable stronger than page.locator?  also john said use different ways
+        Locator rangeSlider = page.getByLabel("Example range");
 
         // actions on page
         textInput.fill(TEXT_INPUT);
@@ -84,33 +81,13 @@ public class RnWebForm {
         defaultCheckbox.click();
         defaultRadio.click();
         colorPicker.fill(COLOR_PICKER);
-        datePicker.fill(DATE_PICKER);
+        datePicker.fill(DATE_PICKER_TEXT_ENTRY); // first flow exercised - user enters date as text
+        page.locator("td.day").getByText(DATE_PICKER_PICKER_ENTRY).click(); // second flow: in addition asserts the date picker clicking works
+        page.locator("body").click();  // user clicks away to close the date picker - matching how the user would use the ui -
+        rangeSlider.fill(RANGE_SLIDER);
 
-        //disabledInput - need an assertion here
-        //readonlyInput - need an assertion here
 
-//        lastName.fill(LASTNAME);
-//        email.fill(EMAIL);
-//        gender.click();
-//        dateOfBirth.fill(DATEOFBIRTH);
-//       // dateOfBirth.press("Enter");
-//        email.fill(EMAIL);
-//        mobile.fill(MOBILENUMBER);
-//        hobbies1.click();
-//        hobbies2.click();
-//
-//        for (String subjects : SUBJECTS) {
-//            subjectsInput.fill(subjects);
-//           // subjectsInput.press("Enter");
-//        }
-//
-//        currentAddress.click();
-//        for (String line : ADDRESSLINES) {
-//            currentAddress.type(line);
-//        }
-//
-        // indexes
-        //final int NAME = 1;
+
 
 //        submit_button.click();
 //        System.out.println("Form submitted successfully!");
@@ -124,7 +101,8 @@ public class RnWebForm {
         //TO DOS 1. PRINT OUT EVERY ROW IN THE TABLE 6 INDEXES. 86 REPEATED 6 TIMES
         // 2. RENAME 'APP' AND CLOSE PIECE OF WORK
         // 3. THEN GO AND DO RNWEBFORM
-        // LOOK UP ON NET.  PLAYWRIGHT DOCS FIRST AND THEN STACKOVERFLOW ETC.
+        // 4. LOOK UP ON NET.  PLAYWRIGHT DOCS FIRST AND THEN STACKOVERFLOW ETC.
+        // 5. get junit installed in repo
         // DO THE REPO PUSH TO GITHUB PERSONAL ACCOUNT - SIMULATE DOING A TEST AND SUBMITTING TO A FIRM
 
     }
