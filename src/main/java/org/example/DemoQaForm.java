@@ -2,6 +2,7 @@ package org.example;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.AriaRole;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class DemoQaForm {
             final String FIRSTNAME = "Richard";
             final String LASTNAME = "Hall";
             final String EMAIL = "richard@email.com";
-            String GENDER = page.locator("label[for='gender-radio-3']").textContent(); // obtaing
+            String GENDER = page.locator("label[for='gender-radio-3']").textContent();
             final String MOBILENUMBER = "1234567890";
             final String DATEOFBIRTH = "11 May 1901";
             final String SUBJECT1 = "Social Studies"; // many more options here - full test could check all.
@@ -72,7 +73,7 @@ public class DemoQaForm {
             //pictures code to go here
             currentAddress.click();
             for (String line : ADDRESSLINES) {
-                currentAddress.type(line);
+                currentAddress.pressSequentially(line);
                 currentAddress.press("Enter");
             }
 
@@ -102,20 +103,31 @@ public class DemoQaForm {
             // code to assert result table
             List<Locator> rows = page.locator("tr").all();
             String NameSubmission = rows.get(NAME).textContent();
-            System.out.println(NameSubmission.contains(FIRSTNAME + " " + LASTNAME));  //1
-            // should be assertTrue(emailContent.contains(FIRSTNAME+" "+LASTNAME)) but junit is not firing, so used system out
+            assertTrue(NameSubmission.contains(FIRSTNAME+" "+LASTNAME),
+                "Name row did not contain expected value(s). Actual: " + NameSubmission);
             String emailSubmission = rows.get(EMAIL_FORM).textContent();
-            System.out.println(emailSubmission.contains(EMAIL)); // 2
+            assertTrue(emailSubmission.contains(EMAIL),
+                    "Email row did not contain expected value(s). Actual: " + emailSubmission);
             String genderSubmission = rows.get(GENDER_FORM).textContent();
-            System.out.println(genderSubmission.contains(GENDER)); // 3
+            assertTrue(genderSubmission.contains(GENDER),
+                    "Gender row did not contain expected value(s). Actual: " + genderSubmission);
+
             String mobileSubmission = rows.get(MOBILE).textContent();
-            System.out.println(mobileSubmission.contains(MOBILENUMBER)); //4
+            assertTrue(mobileSubmission.contains(MOBILENUMBER),
+                    "Mobile Number row did not contain expected value(s). Actual: " + mobileSubmission);
+
             String dobSubmission = rows.get(DOB).textContent().replace(",", " ");
             System.out.println(dobSubmission.contains(DATEOFBIRTH)); //5
+
+
             String subjectsSubmission = rows.get(SUBJECTS_FORM).textContent();
             System.out.println(subjectsSubmission.contains(SUBJECT1) && subjectsSubmission.contains(SUBJECT2));  //6
+
+
             String hobbiesSubmission = rows.get(HOBBIES).textContent();
             System.out.println(hobbiesSubmission.contains(HOBBY1) && hobbiesSubmission.contains(HOBBY2)); //7
+
+
             String addressSubmission = rows.get(ADDRESS).textContent();
             System.out.println(addressSubmission.contains(ADDRESSLINES.get(0)) && addressSubmission.contains(ADDRESSLINES.get(1)) && addressSubmission.contains(ADDRESSLINES.get(2)) && addressSubmission.contains(ADDRESSLINES.get(3))); //9
 
