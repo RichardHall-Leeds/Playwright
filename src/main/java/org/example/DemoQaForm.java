@@ -30,6 +30,8 @@ public class DemoQaForm {
             List<String> SUBJECTS = List.of(SUBJECT1, SUBJECT2);
             final String HOBBY1 = "Sports";
             final String HOBBY2 = "Reading";
+            List<String> HOBBIES = List.of(HOBBY1, HOBBY2);
+            final String FILE_INPUT = "src/main/resources/Test_Document.txt";
             List<String> ADDRESSLINES = List.of(
                     "123 Example Street",
                     "Flat 4B",
@@ -45,13 +47,13 @@ public class DemoQaForm {
             Locator mobile = page.getByPlaceholder("Mobile Number");
             Locator dateOfBirth = page.locator("#dateOfBirthInput");
             Locator subjectsInput = page.locator("#subjectsInput");
-            // how do these label selectors work??
-            Locator hobbies1 = page.locator("label:has-text('" + HOBBY1 + "')");
-            Locator hobbies2 = page.locator("label:has-text('" + HOBBY2 + "')");
+            for (String hobby : HOBBIES) {
+                page.locator("label:has-text('" + hobby + "')").click();
+            }
+            Locator uploadPicture = page.locator("#uploadPicture");
             Locator currentAddress = page.getByPlaceholder("Current Address");
             Locator submit_button = page.getByRole(AriaRole.BUTTON,
                             new Page.GetByRoleOptions().setName("Submit"));
-
 
             // actions to perform on the page
             firstName.fill(FIRSTNAME);
@@ -66,9 +68,6 @@ public class DemoQaForm {
                 subjectsInput.fill(subjects);
                 subjectsInput.press("Enter");
             }
-
-            hobbies1.click();
-            hobbies2.click();
 
             //pictures code to go here
             currentAddress.click();
@@ -98,43 +97,66 @@ public class DemoQaForm {
             final int MOBILE = 4;
             final int DOB = 5;
             final int SUBJECTS_FORM = 6;
-            final int HOBBIES = 7;
+            final int HOBBIES_FORM = 7;
             final int ADDRESS = 9;
             // code to assert result table
             List<Locator> rows = page.locator("tr").all();
             String NameSubmission = rows.get(NAME).textContent();
+
+            // 10 table rows to asser against in total.
+            // could add 11ths for label headers
+
+            // 1 student name
             assertTrue(NameSubmission.contains(FIRSTNAME+" "+LASTNAME),
                 "Name row did not contain expected value(s). Actual: " + NameSubmission);
+
+            // 2 student email
             String emailSubmission = rows.get(EMAIL_FORM).textContent();
             assertTrue(emailSubmission.contains(EMAIL),
                     "Email row did not contain expected value(s). Actual: " + emailSubmission);
+
+            // 3 gender
             String genderSubmission = rows.get(GENDER_FORM).textContent();
             assertTrue(genderSubmission.contains(GENDER),
                     "Gender row did not contain expected value(s). Actual: " + genderSubmission);
 
+            // 4 mobile
             String mobileSubmission = rows.get(MOBILE).textContent();
             assertTrue(mobileSubmission.contains(MOBILENUMBER),
                     "Mobile Number row did not contain expected value(s). Actual: " + mobileSubmission);
 
+            // 5 dob
             String dobSubmission = rows.get(DOB).textContent().replace(",", " ");
-            System.out.println(dobSubmission.contains(DATEOFBIRTH)); //5
+            assertTrue(dobSubmission.contains(DATEOFBIRTH),
+                    "Date of birth row did not contain expected value(s). Actual: " + dobSubmission);
 
-
+            // 6 subjects
             String subjectsSubmission = rows.get(SUBJECTS_FORM).textContent();
-            System.out.println(subjectsSubmission.contains(SUBJECT1) && subjectsSubmission.contains(SUBJECT2));  //6
+            for (String subject : SUBJECTS) {
+                assertTrue(subjectsSubmission.contains(subject),
+                        "Subjects row did not contain expected value: " + subject
+                        + ". Actual: " + subjectsSubmission);
+            }
 
+            // 7 hobbies
+            String hobbiesSubmission = rows.get(HOBBIES_FORM).textContent();
+            for (String hobby : HOBBIES) {
+                assertTrue(hobbiesSubmission.contains(hobby),
+                        "Hobbies row did not contain expected value: " + hobby
+                        + ". Actual: " + hobbiesSubmission);
+            }
 
-            String hobbiesSubmission = rows.get(HOBBIES).textContent();
-            System.out.println(hobbiesSubmission.contains(HOBBY1) && hobbiesSubmission.contains(HOBBY2)); //7
+            // 8 picture - to do input and execution
 
-
+            // 9 address
             String addressSubmission = rows.get(ADDRESS).textContent();
-            System.out.println(addressSubmission.contains(ADDRESSLINES.get(0)) && addressSubmission.contains(ADDRESSLINES.get(1)) && addressSubmission.contains(ADDRESSLINES.get(2)) && addressSubmission.contains(ADDRESSLINES.get(3))); //9
+            for (String line : ADDRESSLINES) {
+                assertTrue(addressSubmission.contains(line),
+                        "Address row did not contain expected value: " + line
+                                + ". Actual: " + addressSubmission);
+            }
 
-
-            //TO DOS 1. PRINT OUT EVERY ROW IN THE TABLE 6 INDEXES. 86 REPEATED 6 TIMES
-            // 2. RENAME 'APP' AND CLOSED PIECE OF WORK
-            // 3. CREATE NEW JAVA
+            // 10 state and city
 
         }
     }
