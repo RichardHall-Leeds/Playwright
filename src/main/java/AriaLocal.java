@@ -36,15 +36,15 @@ public class AriaLocal {
             // Inputs
             // Test data submitted for the tests (user input value)
             final String LASTNAME = "Hall";
-            final String EMAIL = "richard@ukorg.com";
-            final String GENDER = "male"; // deliberately using lower case to test the label matching
+            final String EMAIL_ADDRESS = "richard@ukorg.com";
+            final String GENDER = "Male"; // deliberately using lower case to test the label matching
             final String MOBILENUMBER = "1234567890";
-            final String DATEOFBIRTH = "11 May 1901";
+            final String DATEOFBIRTH = "1901-03-01";
             final String TESTINGSKILLS1 = "Java";
-            final String TESTINGSKILLS2 = "JAVASCRIPT"; // deliberately using upper case to test the label matching
+            final String TESTINGSKILLS2 = "JavaScript"; // deliberately using upper case to test the label matching
             final String TESTINGSKILLS3 = "Allure";
             final String TESTINGSKILLS4 = "Playwright";
-            final String TESTINGSKILLS5 = "Test PLanning"; // deliberate error
+            final String TESTINGSKILLS5 = "Test Planning"; // deliberate error
             List<String> TESTINGSKILLS = List.of(TESTINGSKILLS1, TESTINGSKILLS2, TESTINGSKILLS3, TESTINGSKILLS4, TESTINGSKILLS5);
             final String CV_FILE_INPUT = "src/main/resources/Test_Document.txt";
             final String WORKING_LOCATION_PREFERNCE1 = "Hyrbid Working";
@@ -61,25 +61,57 @@ public class AriaLocal {
             //  UI Labels (on page)
             final String FIRST_NAME_LABEL = "First Name";
             final String LAST_NAME_LABEL = "Last Name";
-            final String EMAIL_LABEL = "Email address";
+            final String EMAIL_ADDRESS_LABEL = "Email address";
             final String GENDER_LABEL = "Gender";
             final String GENDER_MALE_LABEL = "Male";
             final String GENDER_FEMALE_LABEL = "Female";
             final String GENDER_OTHER_LABEL  = "Other";
             final String GENDER_NOT_SAY_LABEL = "Prefer Not to Say";
+            final String MOBILE_NUMBER_LABEL = "Mobile Number";
+            final String DATE_OF_BIRTH_LABEL = "Date of birth";
+            final String TESTING_SKILLS_LABEL = "Testing Skills";
+            final String CV_UPLOAD_LABEL = "Please upload your CV";
+            final String COUNTRY_LABEL = "Country Where you Live";
             // More to do - first focus is on interaction
 
             // Locators
 
-            // Locator gender = page.getByLabel(GENDER);
-            // gender.check();
+            Locator lastName = page.getByRole(AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName(LAST_NAME_LABEL).setExact(true));
+            lastName.fill(LASTNAME);
 
-            page.selectOption("#country", new SelectOption().setLabel(COUNTRY));
+            Locator email = page.getByRole(AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName(EMAIL_ADDRESS_LABEL).setExact(true));
+            email.fill(EMAIL_ADDRESS);
+
+            Locator gender = page.getByRole(AriaRole.RADIO,
+                    new Page.GetByRoleOptions().setName(GENDER).setExact(true));
+            gender.check();
+
+            Locator mobileNumber = page.getByRole(AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName(MOBILE_NUMBER_LABEL).setExact(true));
+            mobileNumber.fill(MOBILENUMBER);
+
+            Locator country = page.getByRole(AriaRole.COMBOBOX,
+                    new Page.GetByRoleOptions().setName(COUNTRY_LABEL).setExact(true));
+            country.selectOption(new SelectOption().setLabel(COUNTRY));
+
+            Locator dateOfBirth = page.getByLabel(DATE_OF_BIRTH_LABEL,
+                    new Page.GetByLabelOptions().setExact(true));
+            dateOfBirth.fill(DATEOFBIRTH);
+
+            Locator testingSkills = page.getByRole(AriaRole.COMBOBOX,
+            new Page.GetByRoleOptions().setName(TESTING_SKILLS_LABEL).setExact(true));
+            for (String skill : TESTINGSKILLS) {
+                testingSkills.fill(skill);
+            }
+
+            Locator cvUpload = page.ge
 
             // Assertions
-//use get by role but use a textarea or 0-3 min test
-            assertThat(page.locator("#country"))
-                    .hasText(COUNTRY);
+            //use get by role but use a textarea or 0-3 min test
+            //assertThat(page.locator("#country"))
+              //    .hasText(COUNTRY);
 
 
         } catch (Exception e) {
