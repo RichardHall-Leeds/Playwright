@@ -38,7 +38,9 @@ public class DemoQaForm {
             );
 
             // locators
-            Locator firstName = page.locator("#firstName");
+            //Locator firstName = page.locator("#firstName");
+            Locator firstName = page.getByRole(AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName("First Name"));
             Locator lastName = page.locator("#lastName");
             Locator email = page.getByPlaceholder("name@example.com");
             Locator gender = page.getByLabel(GENDER, new Page.GetByLabelOptions().setExact(true));  //dynamically obtained from the page.

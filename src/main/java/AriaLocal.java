@@ -35,7 +35,7 @@ public class AriaLocal {
             page.selectOption("#country", new SelectOption().setLabel(COUNTRY));
 
             // Assertions
-
+//use get by role but use a textarea or 0-3 min test
             assertThat(page.locator("#country"))
                     .hasText(COUNTRY);
 
@@ -48,4 +48,4 @@ public class AriaLocal {
 
 
 //declare a disabled field and check its disabled
-// run through the getbylabel, get by row - look at official playwrite documentation for java
+// run through the getbylabel, get by row - look at official playwrite documentation for java o
