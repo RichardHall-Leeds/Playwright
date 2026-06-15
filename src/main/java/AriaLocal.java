@@ -2,9 +2,8 @@ import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.SelectOption;
 
+import java.nio.file.Paths;
 import java.util.List;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 // co-pilot session id 5c2cd444-bbab-45d3-976a-2aba8e532cd0 28/05
 // new session c8/06 1a0d3ead-3b07-4824-9c66-9b9f844e7eb0
@@ -49,6 +48,7 @@ public class AriaLocal {
             final String CV_FILE_INPUT = "src/main/resources/Test_Document.txt";
             final String WORKING_LOCATION_PREFERNCE1 = "Hyrbid Working";
             final String WORKING_LOCATION_PREFERNCE2 = "Fully Remote/Home Working";
+            List<String> WORKING_LOCATION_PREFERENCES = List.of(WORKING_LOCATION_PREFERNCE1, WORKING_LOCATION_PREFERNCE2);
             // didn't do list here to be different
             List<String> POSTALADDRESS = List.of(
                     "123 Example Street",
@@ -72,9 +72,14 @@ public class AriaLocal {
             final String TESTING_SKILLS_LABEL = "Testing Skills";
             final String CV_UPLOAD_LABEL = "Please upload your CV";
             final String COUNTRY_LABEL = "Country Where you Live";
+            final String POSTAL_ADDRESS_LABEL = "Current Postal Address";
             // More to do - first focus is on interaction
 
             // Locators
+
+            Locator firstName = page.getByRole(AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName(FIRST_NAME_LABEL).setExact(true));
+            firstName.fill(FIRSTNAME);
 
             Locator lastName = page.getByRole(AriaRole.TEXTBOX,
                     new Page.GetByRoleOptions().setName(LAST_NAME_LABEL).setExact(true));
@@ -92,10 +97,6 @@ public class AriaLocal {
                     new Page.GetByRoleOptions().setName(MOBILE_NUMBER_LABEL).setExact(true));
             mobileNumber.fill(MOBILENUMBER);
 
-            Locator country = page.getByRole(AriaRole.COMBOBOX,
-                    new Page.GetByRoleOptions().setName(COUNTRY_LABEL).setExact(true));
-            country.selectOption(new SelectOption().setLabel(COUNTRY));
-
             Locator dateOfBirth = page.getByLabel(DATE_OF_BIRTH_LABEL,
                     new Page.GetByLabelOptions().setExact(true));
             dateOfBirth.fill(DATEOFBIRTH);
@@ -106,8 +107,26 @@ public class AriaLocal {
                 testingSkills.fill(skill);
             }
 
-            Locator cvUpload = page.ge
+            Locator cvUpload = page.getByLabel(CV_UPLOAD_LABEL);
+            cvUpload.setInputFiles(Paths.get(CV_FILE_INPUT));
 
+            for (String preference : WORKING_LOCATION_PREFERENCES) {
+                page.getByRole(AriaRole.CHECKBOX,
+                        new Page.GetByRoleOptions().setName(preference).setExact(true)).check();
+            }
+
+
+
+            Locator country = page.getByRole(AriaRole.COMBOBOX,
+                    new Page.GetByRoleOptions().setName(COUNTRY_LABEL).setExact(true));
+            country.selectOption(new SelectOption().setLabel(COUNTRY));
+
+            Locator postalAddress = page.getByRole(AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName(POSTAL_ADDRESS_LABEL).setExact(true));
+              for (String line : POSTALADDRESS) {
+                  postalAddress.pressSequentially(line);
+                  postalAddress.press("Enter");
+            }
             // Assertions
             //use get by role but use a textarea or 0-3 min test
             //assertThat(page.locator("#country"))
@@ -123,3 +142,6 @@ public class AriaLocal {
 
 //declare a disabled field and check its disabled
 // run through the getbylabel, get by row - look at official playwrite documentation for java o
+
+// look up dtos and take it with you.
+// create a directory called dto - a measn of carrying information between a feature and a step file

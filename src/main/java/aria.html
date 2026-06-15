@@ -3,6 +3,21 @@
 <head>
     <title>Richard's Registration Form</title>
 </head>
+
+<style>
+    .button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+
+</style>
 <body bgcolor="red">
 
 <h1>Richard's QA Team Registration Form</h1>
@@ -12,7 +27,7 @@
 
 <p/>
 <form action="submitForm" method="post">
-    <label for="firstName">First Name <input id="firstName" placeholder="First Name" type="text" disabled/></label>
+    <label for="firstName">First Name <input id="firstName" placeholder="First Name" type="text" /></label>
 
     <p/>
     <label for="lastName">Last Name</label>
@@ -34,7 +49,7 @@
     <input id="pererNotToSay" name="gender" type="radio"/>
     <p/>
     <label for="mobileNumber">Mobile Number</label>
-    <input id="mobileNumber" maxlength="10" minlength="10" pattern="\d" type="text"/>
+    <input id="mobileNumber" maxlength="10" minlength="10" pattern="\d{10}" type="text"/>
     <p/>
     <label for="dob">Date of birth</label>
     <input id="dob" type="date"/>
@@ -112,9 +127,9 @@
             });
         })();
     </script>
-    <p>Please upload your CV</p>
-    <input for="cvUpload" id="cvUpload"  name="cvUpload" type="file"/>
-    <label for="cvUpload"></label>
+    <p/>
+    <input id="cvUpload" name="cvUpload" type="file"/>
+    <label for="cvUpload">Please upload your CV</label>                                                                                                                                                                                       ┃
     <hr>
     <h3>Address and Location Details</h3>
     <p/>
@@ -127,10 +142,9 @@
     <label for="fullyRemote">Fully Remote/Home Working</label>
 
     <p/>
-    <label for="postalAddress">Current Postal Address: </label>
-    <textarea cols="50" id="postalAddress" name="postalAddressTextBox" rows="4">
-        Please enter your current postal address here, including house number, street name, city and postcode.
-    </textarea>
+    <label for="postalAddress">Current Postal Address</label>                                                                                                                                                                                 ┃
+    <textarea cols="50" id="postalAddress" name="postalAddressTextBox" rows="4"                                                                                                                                                               ┃
+              placeholder="Please enter your current postal address here, including house number, street name, city and postcode."></textarea>
 
     <p/>
     <label for="country">Country Where you Live</label>
@@ -143,8 +157,7 @@
     </select>
 
     <p/>
-    <input type="submit" value="Submit"/>
-
+    <a href="./confirm.html" class="button" role="button">Submit</a>
 </form>
 </body>
 </html>
