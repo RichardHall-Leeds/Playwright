@@ -2,7 +2,7 @@ Feature: My registration form completion
 
   Background:
     Given I open a browser
-    And I navigate to the local form
+    And I navigate to https://www.enact.co.uk/
 
 
   Scenario: Complete form
