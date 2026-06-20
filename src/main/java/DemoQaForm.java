@@ -106,9 +106,9 @@ public class DemoQaForm {
             // could add 11ths for label headers
 
             // 1 student name
-            String NameSubmission = rows.get(NAME).textContent();
-            assertTrue(NameSubmission.contains(FIRSTNAME+" "+LASTNAME),
-                "Name row did not contain expected value(s). Actual: " + NameSubmission);
+            String nameSubmission = rows.get(NAME).textContent();
+            assertTrue(nameSubmission.contains(FIRSTNAME+" "+LASTNAME),
+                "Name row did not contain expected value(s). Actual: " + nameSubmission);
 
             // 2 student email
             String emailSubmission = rows.get(EMAIL_FORM).textContent();
