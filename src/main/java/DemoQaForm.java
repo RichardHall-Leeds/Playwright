@@ -101,12 +101,12 @@ public class DemoQaForm {
             final int ADDRESS = 9;
             // code to assert result table
             List<Locator> rows = page.locator("tr").all();
-            String NameSubmission = rows.get(NAME).textContent();
 
             // 10 table rows to asser against in total.
             // could add 11ths for label headers
 
             // 1 student name
+            String NameSubmission = rows.get(NAME).textContent();
             assertTrue(NameSubmission.contains(FIRSTNAME+" "+LASTNAME),
                 "Name row did not contain expected value(s). Actual: " + NameSubmission);
 
